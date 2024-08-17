@@ -2,7 +2,6 @@ section .bss
     random_buffer resb 1
     num resb 10
     guess resb 10
-
 section .data
     prompt db 'Guess a number between 1 and 99: ', 0
     prompt_len equ $ - prompt
@@ -12,12 +11,12 @@ section .data
     too_high_len equ $ - too_high_msg
     end db 'You guessed it!', 0
     end_len equ $ - end
-    endline db 0x0A
 
 section .text
     global _start
 
 _start:
+
     mov rax, 1
     mov rdi, 1
     mov rsi, prompt
@@ -25,7 +24,7 @@ _start:
     syscall
 
     mov rdi, random_buffer
-    mov rdx, 1
+    mov rdx, 1 
     mov rax, 318
     syscall
 
@@ -74,14 +73,6 @@ correct_guess:
     mov rsi, end
     mov rdx, end_len
     syscall
-
-    mov rax, 1
-    mov rdi, 1
-    mov rsi, endline
-    mov rdx, 1
-    syscall
-
-
 
     mov rax, 60
     xor rdi, rdi
