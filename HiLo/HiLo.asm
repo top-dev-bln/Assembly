@@ -1,5 +1,4 @@
 section .data
-    num db 50
     prompt db 'Guess a number between 1 and 99: ', 0
     prompt_len equ $-prompt
     too_low db 'Too low, try again: ', 0
@@ -12,13 +11,34 @@ section .data
 
 section .bss
     guess resb 11
+    number resb 11
 
 section .text
     global _start
 
 _start:
-    call generate
-    mov rbx, rdx
+
+    
+
+    ; put rdx in number and print it
+
+    movzx rdx, dl
+    add rdx, '0'
+    mov [number], dl
+
+    
+
+
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, number
+    mov rdx, 11
+    syscall
+
+
+    
+
+
 
     mov rax, 1             
     mov rdi, 1             
@@ -80,21 +100,3 @@ exit:
     syscall
 
 
-
-generate:
-    rdtsc
-    xor rdx, rdx
-    mov rax, rdx
-    
-    mov rbx, 100000
-    xor rdx, rdx
-    div rbx
-
-    mov rax, rdx
-    xor edx, edx
-    mov rbx, 100
-    div rbx
-
-    mov rax, rdx
-
-    ret
